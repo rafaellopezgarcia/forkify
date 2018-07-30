@@ -9,7 +9,176 @@
 <body>
     <h1>Asynchronous JavaScript</h1>
     <script>
+        /*
+        // ---- Synchronus JavaScript
+        const second = () => {
+            console.log('Second');
+        }
+        // Function expression using new syntax
+        const first = () => {
+            console.log('Hey there');
+        }
+        first();
+        second();
+        console.log('The end');
+
+        // ---- Asynchronus JavaScript
+        // Timer runs in the background.
+        const first2 = () => {
+            console.log('Hey there 2');
+        }
         
+        const second2 = () => {
+            setTimeout(() =>{
+                console.log('Async Hey there');
+            }, 2000);
+        }
+        first2();
+        second2();
+        console.log('The end');
+        */
+
+        /* Synchronus vs Asynchronus
+           Asynchronous functions run in the background. Callback functions run
+           once the function has finished its work.
+           The event loop: setTimeout function runs inside the web API. The 
+           callback function then moves to the message queue and it is executed
+           once the execution stack is empty. The event loop constantly monitors
+           the execution stack and the message queue and pushes the first call-
+           back function in line as soon as the stack is empty.
+
+        */
+        
+        // ---- Callback hell examle:
+        /*function getRecipe(){
+            setTimeout(() => {
+                const recipeID = [13, 65, 15, 200];
+                console.log(recipeID);
+
+                setTimeout((id) => {
+                    const recipe = {
+                        title: 'Fresh tomato pasta',
+                        publisher: 'Jonas'
+                    };
+                    console.log(`${id}: ${recipe.title}`);
+
+                    setTimeout(publisher => {
+                        const recipe = {
+                            title: 'Italian Pizza',
+                            publisher: 'Jonas'
+                        };
+                        console.log(recipe);
+                    }, 1000, recipe.publisher);
+                }, 1000, recipeID[2]);
+            }, 1500);
+        }
+        getRecipe();
+        */
+
+        /* Promises.
+           It is an object that keeeps track about whether a certain event has 
+           happened already or not. It determines what happens after the event
+           has happened. It implements the concept of a future value that we're
+           expecting.
+
+           States: PENDING -> SETTLED/RESOLVED -> FULFILLED OR REJECTED
+        */
+
+        /*const getIDs = new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve([13, 65, 15, 200]);
+            }, 1500);
+        });
+
+        const getRecipe = recID => {
+            return new Promise((resolve, reject) =>{
+                setTimeout( ID => {
+                    const recipe = {
+                        title: 'Fresh tomato',
+                        publisher: 'Jonas'
+                    };
+                    resolve(`${ID}: ${recipe.title}`);
+                }, 1000, recID);
+                
+            });
+        };
+
+        const getRelated = publisher => {
+            return new Promise((resolve, reject) =>{
+                setTimeout(pub => {
+                    const recipe = {
+                        title: 'Italian Pizza',
+                        publisher: 'Jonas'
+                        };
+                    resolve(`${pub}: ${recipe.title}`);
+                    
+                }, 1500, publisher);
+            });
+        };*/
+
+        // 'then' handles the fulfilled promise (resolve).
+        // 'catch' handles the rejection promise (reject).
+        /*getIDs.then(IDs =>{
+            console.log(IDs);
+            return getRecipe(IDs[2]);
+        })
+        .then(recipe => {
+            console.log(recipe);
+            return getRelated('Jonas');
+        })
+        .then(recipe => {
+            console.log(recipe);
+        })
+        .catch(error =>{
+            console.log('error');
+        });*/
+
+        /* From promises to async/await and AJAX.
+           Await can only be used inside an async function.
+           An async function always returns a promise.
+        */
+
+
+        /*async function getRecipesAW(){
+            const IDs = await getIDs;   
+            console.log(IDs);
+            const recipe = await getRecipe(IDs[2]);
+            console.log(recipe); 
+            const related = await getRelated('Jonas');
+            console.log(related);   
+            return  recipe; //return in an async function does not work ---unless using then--- because it works in the background. 
+        }
+        getRecipesAW().then(result =>console.log(result));
+
+        console.log('This was called after');*/
+
+        /*
+           AJAX: Asynchronus JavaScript And Xml.
+           APIS: Application Programming Interface.
+           The API is a part of the server that receives requests and sends backs responses.
+           3rd Party APIs: Google Maps, Embedded YouTube videos, Weather data, Movies data
+        */
+
+        /* Fetch: Modern web API (it is available in the browser but it is not part of JavaScript itself).
+
+        */
+
+        // Proxy the request to our own server and send the data to the brwoser.
+        // Fetch gets our data and returns a promise
+        fetch('https://crossorigin.me/https://www.metaweather.com/api/location/2487956/')
+        .then(result => {
+            console.log(result);
+            return result.json();
+        })
+        .then(data => {
+            console.log(data);
+        })
+        .catch(error => console.log('error'));
+        
+        
+)
+
+
     </script>
 </body>
 </html>
