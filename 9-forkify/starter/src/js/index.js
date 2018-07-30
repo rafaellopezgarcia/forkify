@@ -81,6 +81,19 @@ elements.searchForm.addEventListener('submit', e => {
     controlSearch();
 });
 
+elements.searchResPages.addEventListener('click', e =>{
+    /* The closest method returns the closest ancestor of the current
+       element (or the current element itself) which matches the 
+       selectors given in parameter.
+    */
+   const btn = e.target.closest('.btn-inline');
+    if (btn) {
+        const goToPage = parseInt(btn.dataset.goto, 10);
+        searchView.clearResults();
+        searchView.renderResults(state.search.result, goToPage);
+    }
+});
+
 
 const search = new Search('pizza');
 console.log(search);
