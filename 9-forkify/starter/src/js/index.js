@@ -1,41 +1,3 @@
-// Global app controller
-/*import x from './test'
-const y = 23;
-console.log(`I imported ${x} from another module called test.js!
- Variable y is ${y}`);
-
-import stdr from './models/Search'
-import { add as a, multiply as m, ID} from './views/searchView'
-import * as searchView from './views/searchView'
-
-console.log(`Using imported functions! ${a(ID,2)} and 
-${m(3,3)}. ${stdr}`);
-
-console.log(`Using imported functions! ${searchView.add(3,2)} and 
-${searchView.multiply(3,3)}. ${stdr}`);
-
-//----------------
-import axios from 'axios';
-async function getResults(query){
-    const proxy = 'https://cors-anywhere.herokuapp.com/';
-    const key = '460b2841538a88e336f45803593f1535';
-    try{
-        // The result value of the promise will be saved into res.
-        const res = await axios(`${proxy}http://food2fork.com/api/search?key=${key}&q=${query}`);
-        const recipes =res.data.recipes;
-        console.log(recipes);
-    }catch(error){
-        alert();
-    }
-}
-
-getResults('pizza');
-console.log('hi');
-
-//460b2841538a88e336f45803593f1535 
-*/
-
-
 import Search from './models/Search';
 import Recipe from './models/Recipe'
 import * as searchView from './views/searchView';
@@ -90,6 +52,7 @@ elements.searchForm.addEventListener('submit', e => {
     controlSearch();
 });
 
+
 elements.searchResPages.addEventListener('click', e =>{
     /* The closest method returns the closest ancestor of the current
        element (or the current element itself) which matches the 
@@ -116,10 +79,15 @@ const controlRecipe = async () => {
         // Prepare UI for changes
 
         // Create new recipe object
+       
         state.recipe = new Recipe(id);
+
+     
         try{
-            // Get recipe data
+            // Get recipe data and parse ingredients
             await state.recipe.getRecipe();
+            console.log(state.recipe.ingredients)
+            state.recipe.parseIngredients();
 
             // Calculate servings and time
             state.recipe.calcTime();
